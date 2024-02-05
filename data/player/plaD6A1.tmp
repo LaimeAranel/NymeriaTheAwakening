@@ -46,14 +46,6 @@ material = SubResource("StandardMaterial3D_3iwsb")
 
 [node name="player" type="CharacterBody3D"]
 script = ExtResource("1_u1w3t")
-sprint_enabled = null
-crouch_enabled = null
-base_speed = null
-sprint_speed = null
-jump_velocity = null
-sensitivity = null
-accel = null
-crouch_speed = null
 Characterinformation = ExtResource("2_lbvfs")
 
 [node name="head" type="Node3D" parent="."]

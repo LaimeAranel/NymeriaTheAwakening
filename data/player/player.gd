@@ -46,7 +46,7 @@ var crouch_player_y_scale: float = 0.75
 	"body": $body,
 	"collision": $collision,
 }
-@onready var HUD = $hud_camera/HUD
+@onready var HUD = $head/HUD
 @onready var world: SceneTree = get_tree()
 
 var timer: Timer
@@ -80,9 +80,12 @@ func handle_movement_input(delta: float) -> void:
 			enter_normal_state(delta)
 
 func enter_sprint_state(delta: float) -> void:
-	state = "sprinting"
-	speed = sprint_speed
-	parts["camera"].fov = lerp(parts["camera"].fov, camera_fov_extents[1], 10 * delta)
+		state = "sprinting"
+		speed = sprint_speed
+		parts["camera"].fov = lerp(parts["camera"].fov, camera_fov_extents[1], 10 * delta)
+		enter_normal_state(delta)
+		print("back to normal")
+
 
 func enter_crouch_state(delta: float) -> void:
 	state = "crouching"

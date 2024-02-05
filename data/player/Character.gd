@@ -9,7 +9,7 @@ enum EnumElement{ Fire, Water, Air, Nature, }
 
 @export_category("leveling")
 @export var Level: int
-@export var Experiencce: float
+@export var Experience: float
 @export var Experience_needed_for_next_level: float
 @export var Skillpoints: float
 
@@ -29,7 +29,8 @@ enum EnumElement{ Fire, Water, Air, Nature, }
 @export var Max_Energy: float
 
 @export var Stamina: float
-@export var Max_Stamina: float 
+@export var Max_Stamina: float
+@export var StaminaReduction: float
 
 @export var Sleep: float
 @export var max_sleep: float
@@ -53,6 +54,8 @@ signal saveCharacter
 signal loadCharacter
 signal updateStats
 signal DealDamagetoPlayer(float)
+signal ReduceStamina
+signal StaminaEmpty
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -74,11 +77,17 @@ func _process(delta):
 func regenerateHealth():
 	while Health < Max_Health:
 		if Timer.time_left == 0:
-			Health = Health + Healthregen 
+			Health = Health + Healthregen
 			Hunger = Hunger - 1
 			Thirst = Thirst - 0.5
 			Timer.wait_time = 100
 			Timer.start
 		else:
 			continue
-		
+			
+func ReduceStaminaforSprinting():
+	var ReduceStamina = await ReduceStamina
+	var timer: Timer
+	var Timerup = await timer.is_stopped()
+	if ReduceStamina:
+		Stamina -= StaminaReduction
