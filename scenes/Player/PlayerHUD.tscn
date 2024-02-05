@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://ce2ars6p1jtj"]
+[gd_scene load_steps=5 format=3 uid="uid://ce2ars6p1jtj"]
 
 [ext_resource type="Texture2D" uid="uid://danf11ewewn3n" path="res://assets/HUD/life_under.jpg" id="1_10nvu"]
-[ext_resource type="Texture2D" uid="uid://c1la1uy057vde" path="res://assets/HUD/life_red.jpg" id="2_edruf"]
+[ext_resource type="Texture2D" uid="uid://c11p8auyjgxdu" path="res://assets/HUD/Energy_bar.png" id="2_0gbol"]
+[ext_resource type="Texture2D" uid="uid://due5sfudf5cyt" path="res://assets/HUD/health_bar.png" id="3_apu5y"]
+[ext_resource type="Texture2D" uid="uid://d3q7a4g44gjkg" path="res://assets/HUD/experience.png" id="4_5fqe5"]
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -23,54 +25,43 @@ horizontal_alignment = 1
 
 [node name="EnergyBar" type="TextureProgressBar" parent="."]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = -88.0
-offset_right = 296.0
-offset_bottom = -64.0
-grow_vertical = 0
+anchors_preset = -1
+anchor_left = 0.0130208
+anchor_top = 0.12037
+anchor_right = 0.256076
+anchor_bottom = 0.157407
 step = 0.01
 value = 50.0
 nine_patch_stretch = true
 texture_under = ExtResource("1_10nvu")
-texture_progress = ExtResource("2_edruf")
-tint_under = Color(0.160784, 0.0823529, 0.0156863, 1)
-tint_progress = Color(0.274592, 0.258166, 0.085735, 1)
+texture_progress = ExtResource("2_0gbol")
+metadata/_edit_use_anchors_ = true
 
 [node name="Healthbar" type="TextureProgressBar" parent="."]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = -56.0
-offset_right = 296.0
-offset_bottom = -32.0
-grow_vertical = 0
+anchors_preset = -1
+anchor_left = 0.0138889
+anchor_top = 0.0694444
+anchor_right = 0.0138889
+anchor_bottom = 0.0694444
+offset_right = 280.0
+offset_bottom = 24.0
 step = 0.01
 value = 50.0
 nine_patch_stretch = true
 texture_under = ExtResource("1_10nvu")
-texture_progress = ExtResource("2_edruf")
-tint_under = Color(0.160784, 0.0823529, 0.0156863, 1)
-tint_progress = Color(0.274592, 0.258166, 0.085735, 1)
+texture_progress = ExtResource("3_apu5y")
+metadata/_edit_use_anchors_ = true
 
 [node name="ExperienceBar" type="TextureProgressBar" parent="."]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 368.0
-offset_top = -160.0
-offset_right = 808.0
-offset_bottom = -136.0
-grow_vertical = 0
+layout_mode = 0
+offset_left = 350.0
+offset_top = 551.0
+offset_right = 362.0
+offset_bottom = 551.5
+scale = Vector2(51.6674, 7.95664)
 step = 0.01
-value = 50.0
+value = 75.0
 nine_patch_stretch = true
 texture_under = ExtResource("1_10nvu")
-texture_progress = ExtResource("2_edruf")
-tint_under = Color(0.776471, 0.54902, 0.913725, 1)
-tint_progress = Color(0.337255, 0.427451, 0.435294, 1)
+texture_progress = ExtResource("4_5fqe5")

@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="Character" load_steps=2 format=3 uid="uid://dqog2g05kxi0s"]
+
+[ext_resource type="Script" path="res://data/player/Character.gd" id="1_db30a"]
+
+[resource]
+script = ExtResource("1_db30a")
+Name = "Elisieth"
+Race = 1
+Element = 0
+Level = 0
+Experiencce = 20.0
+Experience_needed_for_next_level = 100.0
+Skillpoints = 1.0
+Elemental_Level = 1
+Elemental_Experiencce = 10.0
+Elemental_Experience_needed_for_next_level = 100.0
+Elemental_Skillpoints = 0.0
+Health = 100.0
+Max_Health = 100.0
+Healthregen = 1.0
+waitTimeHealth = 1
+Energy = 1.0
+Max_Energy = 100.0
+Stamina = 2.0
+Max_Stamina = 100.0
+Sleep = 100.0
+max_sleep = 100.0
+Hunger = 10.0
+max_Hunger = 100.0
+Thirst = 10.0
+max_thirst = 100.0
+Intelligence = 12
+Strength = 34
+Agillity = 5
+Charisma = 4
+PlayerPos = Vector3(0, 0, 0)

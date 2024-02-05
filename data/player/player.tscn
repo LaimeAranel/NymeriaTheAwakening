@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://cwiu8nsyij4gn"]
+[gd_scene load_steps=12 format=3 uid="uid://cwiu8nsyij4gn"]
 
 [ext_resource type="Script" path="res://data/player/player.gd" id="1_u1w3t"]
-[ext_resource type="Texture2D" uid="uid://bubwl36108v2r" path="res://data/cursors/crosshair001.png" id="2_nq3sk"]
+[ext_resource type="Resource" uid="uid://dqog2g05kxi0s" path="res://data/player/TestCharacter/Elisieth.tres" id="2_lbvfs"]
 [ext_resource type="PackedScene" uid="uid://ce2ars6p1jtj" path="res://scenes/Player/PlayerHUD.tscn" id="3_ffxig"]
+[ext_resource type="Script" path="res://scenes/Player/PlayerHUD.gd" id="4_rxnd8"]
 
 [sub_resource type="Animation" id="Animation_saxjg"]
 resource_name = "head_bob"
@@ -34,6 +35,9 @@ _data = {
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_phygr"]
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3bn2j"]
+load_path = "res://.godot/imported/crosshair001.png-d1fc17a797cae0a64c21da11aea45568.ctex"
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3iwsb"]
 albedo_color = Color(0.917647, 0.529412, 0.168627, 1)
 
@@ -42,6 +46,7 @@ material = SubResource("StandardMaterial3D_3iwsb")
 
 [node name="player" type="CharacterBody3D"]
 script = ExtResource("1_u1w3t")
+Characterinformation = ExtResource("2_lbvfs")
 
 [node name="head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
@@ -59,15 +64,14 @@ shape = SubResource("CapsuleShape3D_phygr")
 [node name="hud_camera" type="Camera2D" parent="."]
 
 [node name="crosshair" type="Sprite2D" parent="hud_camera"]
-texture = ExtResource("2_nq3sk")
+texture = SubResource("CompressedTexture2D_3bn2j")
 
 [node name="HUD" parent="hud_camera" instance=ExtResource("3_ffxig")]
-offset_left = -289.79
-offset_top = 395.789
-offset_right = -289.79
-offset_bottom = 395.789
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("4_rxnd8")
+CharacterInformation = ExtResource("2_lbvfs")
+metadata/_edit_use_anchors_ = true
 
 [node name="body" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_3oyv7")

@@ -45,14 +45,15 @@ var crouch_player_y_scale: float = 0.75
 	"camera_animation": $head/camera/camera_animation,
 	"body": $body,
 	"collision": $collision,
-	"hud": $hud_camera/HUD
 }
+@onready var HUD = $hud_camera/HUD
 @onready var world: SceneTree = get_tree()
 
 var timer: Timer
 
 func _ready() -> void:
 	parts["camera"].current = true
+	HUD.setCharacterinformation(Characterinformation)
 
 func _process(delta: float) -> void:
 	handle_movement_input(delta)
@@ -137,4 +138,6 @@ func handle_mouse_movement(event: InputEventMouseMotion) -> void:
 func _damagedealt(Damage: int):
 	Characterinformation.DealDamagetoPlayer.emit(Damage)
 
+func atttacktarget(player, target)-> void:
+	pass
 

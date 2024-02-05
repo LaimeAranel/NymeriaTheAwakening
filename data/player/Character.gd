@@ -61,6 +61,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if Health < Max_Health:
+		regenerateHealth()
 	if delta == 100:
 		if Hunger > 0:
 			Hunger = Hunger - 1
@@ -71,7 +73,12 @@ func _process(delta):
 
 func regenerateHealth():
 	while Health < Max_Health:
-		Health = Health + Healthregen 
-		Hunger = Hunger - 1
-		Thirst = Thirst - 0.5
-		Timer.wait_time = 100
+		if Timer.time_left == 0:
+			Health = Health + Healthregen 
+			Hunger = Hunger - 1
+			Thirst = Thirst - 0.5
+			Timer.wait_time = 100
+			Timer.start
+		else:
+			continue
+		
