@@ -58,15 +58,18 @@ var timer: Timer
 func _ready() -> void:
 	parts["camera"].current = true
 	HUD.setCharacter(Characterinformation)
-	if Characterinformation.Stamina == Characterinformation.Max_Stamina:
-		Staminafull = true
 
 func _process(delta: float) -> void:
 	handle_movement_input(delta)
 	update_camera(delta)
+	if Characterinformation.Hunger == 0:
+		Characterinformation.Health -= 0.5
+	if Characterinformation.Thirst == 0:
+		Characterinformation.Health -= 0.5
 	if isnormalstate == true and isSprinting == false:
 		if Characterinformation.Stamina != Characterinformation.Max_Stamina:
 			Characterinformation.Stamina = Characterinformation.Stamina + Characterinformation.Staminaregeneration
+			Characterinformation.Hunger = Characterinformation.Hunger - (Characterinformation.HungerReduction * 2)
 			if Characterinformation.Stamina == Characterinformation.Max_Stamina:
 				Staminafull = true
 	HUD.HUDUpdate.emit()
@@ -103,6 +106,7 @@ func enter_sprint_state(delta: float) -> void:
 		isSprinting = false
 	else:
 		Characterinformation.Stamina = Characterinformation.Stamina - Characterinformation.StaminaReduction
+		Characterinformation.Thirst -= Characterinformation.Thirst * 2
 		print(Characterinformation.Stamina)
 		HUD.HUDUpdate.emit()
 
