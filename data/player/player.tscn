@@ -1,9 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://cwiu8nsyij4gn"]
+[gd_scene load_steps=11 format=3 uid="uid://cwiu8nsyij4gn"]
 
 [ext_resource type="Script" path="res://data/player/player.gd" id="1_u1w3t"]
 [ext_resource type="Resource" uid="uid://dqog2g05kxi0s" path="res://data/player/TestCharacter/Elisieth.tres" id="2_lbvfs"]
 [ext_resource type="PackedScene" uid="uid://ce2ars6p1jtj" path="res://scenes/Player/PlayerHUD.tscn" id="3_ffxig"]
-[ext_resource type="Script" path="res://scenes/Player/PlayerHUD.gd" id="4_rxnd8"]
 
 [sub_resource type="Animation" id="Animation_saxjg"]
 resource_name = "head_bob"
@@ -46,14 +45,6 @@ material = SubResource("StandardMaterial3D_3iwsb")
 
 [node name="player" type="CharacterBody3D"]
 script = ExtResource("1_u1w3t")
-sprint_enabled = null
-crouch_enabled = null
-base_speed = null
-sprint_speed = null
-jump_velocity = null
-sensitivity = null
-accel = null
-crouch_speed = null
 Characterinformation = ExtResource("2_lbvfs")
 
 [node name="head" type="Node3D" parent="."]
@@ -78,7 +69,6 @@ grow_horizontal = 1
 grow_vertical = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("4_rxnd8")
 CharacterInformation = ExtResource("2_lbvfs")
 
 [node name="collision" type="CollisionShape3D" parent="."]
@@ -95,3 +85,5 @@ mesh = SubResource("CapsuleMesh_3oyv7")
 
 [node name="crouch_roof_detect" type="RayCast3D" parent="."]
 target_position = Vector3(0, 1, 0)
+
+[node name="Timer" type="Timer" parent="."]

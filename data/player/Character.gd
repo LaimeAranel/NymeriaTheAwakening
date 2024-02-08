@@ -30,22 +30,27 @@ enum EnumElement{ Fire, Water, Air, Nature, }
 
 @export var Stamina: float
 @export var Max_Stamina: float
-@export var StaminaReduction: float
+@export var StaminaReduction: float = 0.050
+@export var Staminaregeneration: float = 0.025
 
 @export var Sleep: float
 @export var max_sleep: float
+@export var SleepReduction: float = 0.050
 
 @export var Hunger: float
 @export var max_Hunger: float
+@export var HungerReduction: float = 0.050
 
 @export var Thirst: float
 @export var max_thirst: float
+@export var ThirstReduction: float = 0.050
 
 @export_category("stats")
 @export var Intelligence: int
 @export var Strength: int
 @export var Agillity: int
 @export var Charisma: int
+@export var additional_movement_speed: float
 
 @export_category("Player_state")
 @export var PlayerPos: Vector3
@@ -56,7 +61,15 @@ signal updateStats
 signal DealDamagetoPlayer(float)
 signal ReduceStamina
 signal StaminaEmpty
+signal stopSprinting
 
+func _onstartsprinting():
+	while await stopSprinting:
+		if Stamina != 0:
+			Stamina = Stamina - StaminaReduction
+			print(Stamina)
+		else: 
+			stopSprinting.emit()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -80,14 +93,7 @@ func regenerateHealth():
 			Health = Health + Healthregen
 			Hunger = Hunger - 1
 			Thirst = Thirst - 0.5
-			Timer.wait_time = 100
-			Timer.start
 		else:
 			continue
-			
-func ReduceStaminaforSprinting():
-	var ReduceStamina = await ReduceStamina
-	var timer: Timer
-	var Timerup = await timer.is_stopped()
-	if ReduceStamina:
-		Stamina -= StaminaReduction
+		
+

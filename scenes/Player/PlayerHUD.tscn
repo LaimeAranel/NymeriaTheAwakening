@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://ce2ars6p1jtj"]
+[gd_scene load_steps=7 format=3 uid="uid://ce2ars6p1jtj"]
 
 [ext_resource type="Texture2D" uid="uid://danf11ewewn3n" path="res://assets/HUD/life_under.jpg" id="1_10nvu"]
+[ext_resource type="Script" path="res://scenes/Player/PlayerHUD.gd" id="1_bn6th"]
 [ext_resource type="Texture2D" uid="uid://c11p8auyjgxdu" path="res://assets/HUD/Energy_bar.png" id="2_0gbol"]
 [ext_resource type="Texture2D" uid="uid://due5sfudf5cyt" path="res://assets/HUD/health_bar.png" id="3_apu5y"]
 [ext_resource type="Texture2D" uid="uid://d3q7a4g44gjkg" path="res://assets/HUD/experience.png" id="4_5fqe5"]
+[ext_resource type="Script" path="res://scenes/Player/EnergyBar.gd" id="4_wjiqf"]
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -12,6 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_bn6th")
 
 [node name="LevelUp" type="Label" parent="."]
 visible = false
@@ -34,6 +37,7 @@ value = 50.0
 nine_patch_stretch = true
 texture_under = ExtResource("1_10nvu")
 texture_progress = ExtResource("2_0gbol")
+script = ExtResource("4_wjiqf")
 
 [node name="Healthbar" type="TextureProgressBar" parent="."]
 layout_mode = 1
@@ -61,6 +65,7 @@ texture_under = ExtResource("1_10nvu")
 texture_progress = ExtResource("4_5fqe5")
 
 [node name="StaminaBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
 offset_left = 428.0
 offset_top = 545.0
 offset_right = 778.0
@@ -70,3 +75,5 @@ value = 50.0
 nine_patch_stretch = true
 texture_under = ExtResource("1_10nvu")
 texture_progress = ExtResource("2_0gbol")
+
+[connection signal="Characterset" from="." to="EnergyBar" method="_on_hud_characterset"]

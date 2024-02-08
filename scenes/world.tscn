@@ -1,45 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://dvbgf6drv86br"]
+[gd_scene load_steps=11 format=3 uid="uid://dvbgf6drv86br"]
 
 [ext_resource type="PackedScene" uid="uid://cwiu8nsyij4gn" path="res://data/player/player.tscn" id="1_tnv5a"]
 [ext_resource type="Script" path="res://data/scripts/world.gd" id="1_x87ln"]
 [ext_resource type="Texture2D" uid="uid://bfmbndv1sge56" path="res://data/sky.exr" id="3_5hgqm"]
 [ext_resource type="Texture2D" uid="uid://cknnpbe7gnutf" path="res://data/prototype/Green/texture_01.png" id="3_hpn24"]
-[ext_resource type="Script" path="res://data/player/Character.gd" id="3_roil3"]
 [ext_resource type="Texture2D" uid="uid://cjmy06h4u2c4r" path="res://data/prototype/Orange/texture_01.png" id="4_x8haq"]
-
-[sub_resource type="Resource" id="Resource_ikuy3"]
-script = ExtResource("3_roil3")
-Name = ""
-Race = 0
-Element = 0
-Level = 0
-Experience = 0.0
-Experience_needed_for_next_level = 0.0
-Skillpoints = 0.0
-Elemental_Level = 0
-Elemental_Experiencce = 0.0
-Elemental_Experience_needed_for_next_level = 0.0
-Elemental_Skillpoints = 0.0
-Health = 0.0
-Max_Health = 0.0
-Healthregen = 0.0
-waitTimeHealth = 0
-Energy = 0.0
-Max_Energy = 0.0
-Stamina = 0.0
-Max_Stamina = 0.0
-StaminaReduction = 0.0
-Sleep = 0.0
-max_sleep = 0.0
-Hunger = 0.0
-max_Hunger = 0.0
-Thirst = 0.0
-max_thirst = 0.0
-Intelligence = 0
-Strength = 0
-Agillity = 0
-Charisma = 0
-PlayerPos = Vector3(0, 0, 0)
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6bxyf"]
 panorama = ExtResource("3_5hgqm")
@@ -66,7 +31,6 @@ script = ExtResource("1_x87ln")
 
 [node name="player" parent="." instance=ExtResource("1_tnv5a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.155264, 1.65438, -0.150931)
-Characterinformation = SubResource("Resource_ikuy3")
 
 [node name="environment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_xj5u1")

@@ -37,6 +37,9 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 var camera_fov_extents: Array[float] = [75.0, 85.0]  # index 0 is normal, index 1 is sprinting
 var base_player_y_scale: float = 1.0
 var crouch_player_y_scale: float = 0.75
+var isSprinting: bool = false
+var isnormalstate: bool = false
+var Staminafull: bool = false
 
 # Node References
 @onready var parts: Dictionary = {
@@ -51,13 +54,22 @@ var crouch_player_y_scale: float = 0.75
 
 var timer: Timer
 
+
 func _ready() -> void:
 	parts["camera"].current = true
-	HUD.setCharacterinformation(Characterinformation)
+	HUD.setCharacter(Characterinformation)
+	if Characterinformation.Stamina == Characterinformation.Max_Stamina:
+		Staminafull = true
 
 func _process(delta: float) -> void:
 	handle_movement_input(delta)
 	update_camera(delta)
+	if isnormalstate == true and isSprinting == false:
+		if Characterinformation.Stamina != Characterinformation.Max_Stamina:
+			Characterinformation.Stamina = Characterinformation.Stamina + Characterinformation.Staminaregeneration
+			if Characterinformation.Stamina == Characterinformation.Max_Stamina:
+				Staminafull = true
+	HUD.HUDUpdate.emit()
 
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
@@ -70,7 +82,7 @@ func _input(event: InputEvent) -> void:
 
 # Movement Logic
 func handle_movement_input(delta: float) -> void:
-	if Input.is_action_pressed("move_sprint") and !Input.is_action_pressed("move_crouch") and sprint_enabled:
+	if Input.is_action_pressed("move_sprint") and !Input.is_action_pressed("move_crouch") and sprint_enabled and Characterinformation.Stamina >= 0:
 		if !$crouch_roof_detect.is_colliding(): #if the player is crouching and underneath a ceiling that is too low, don't let the player stand up
 			enter_sprint_state(delta)
 	elif Input.is_action_pressed("move_crouch") and !Input.is_action_pressed("move_sprint") and crouch_enabled:
@@ -80,11 +92,19 @@ func handle_movement_input(delta: float) -> void:
 			enter_normal_state(delta)
 
 func enter_sprint_state(delta: float) -> void:
-		state = "sprinting"
-		speed = sprint_speed
-		parts["camera"].fov = lerp(parts["camera"].fov, camera_fov_extents[1], 10 * delta)
+	state = "sprinting"
+	speed = sprint_speed + Characterinformation.additional_movement_speed
+	parts["camera"].fov = lerp(parts["camera"].fov, camera_fov_extents[1], 10 * delta)
+	isSprinting = true
+	print("%10d" % Characterinformation.Stamina)
+	if Characterinformation.Stamina <= 0:
+		print("Stamina empty")
 		enter_normal_state(delta)
-		print("back to normal")
+		isSprinting = false
+	else:
+		Characterinformation.Stamina = Characterinformation.Stamina - Characterinformation.StaminaReduction
+		print(Characterinformation.Stamina)
+		HUD.HUDUpdate.emit()
 
 
 func enter_crouch_state(delta: float) -> void:
@@ -95,6 +115,7 @@ func enter_crouch_state(delta: float) -> void:
 func enter_normal_state(delta: float) -> void:
 	state = "normal"
 	speed = base_speed
+	isnormalstate = true
 	reset_transforms(delta)
 
 # Camera Logic
