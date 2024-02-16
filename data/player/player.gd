@@ -62,10 +62,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	handle_movement_input(delta)
 	update_camera(delta)
-	if Characterinformation.Hunger == 0:
-		Characterinformation.Health -= 0.5
-	if Characterinformation.Thirst == 0:
-		Characterinformation.Health -= 0.5
+	if Characterinformation.Hunger <= 0:
+		Characterinformation.Health = Characterinformation.health - 0.5
+	if Characterinformation.Thirst <= 0:
+		Characterinformation.Health = Characterinformation.health - 0.5
 	if isnormalstate == true and isSprinting == false:
 		if Characterinformation.Stamina != Characterinformation.Max_Stamina:
 			Characterinformation.Stamina = Characterinformation.Stamina + Characterinformation.Staminaregeneration
@@ -73,6 +73,12 @@ func _process(delta: float) -> void:
 			if Characterinformation.Stamina == Characterinformation.Max_Stamina:
 				Staminafull = true
 	HUD.HUDUpdate.emit()
+	if Characterinformation.Health != Characterinformation.Max_Health and Characterinformation.Hunger >= 0 and Characterinformation.Thirst >= 0:
+		Characterinformation.Health += (Characterinformation.Health + Characterinformation.Healthregen)
+		Characterinformation.Hunger = Characterinformation.Hunger - Characterinformation.HungerReduction
+		Characterinformation.Thirst = Characterinformation.Thirst - Characterinformation.ThirstReduction
+		
+	print(Characterinformation.Health)
 
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
@@ -99,9 +105,7 @@ func enter_sprint_state(delta: float) -> void:
 	speed = sprint_speed + Characterinformation.additional_movement_speed
 	parts["camera"].fov = lerp(parts["camera"].fov, camera_fov_extents[1], 10 * delta)
 	isSprinting = true
-	print("%10d" % Characterinformation.Stamina)
 	if Characterinformation.Stamina <= 0:
-		print("Stamina empty")
 		enter_normal_state(delta)
 		isSprinting = false
 	else:

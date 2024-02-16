@@ -63,13 +63,7 @@ signal ReduceStamina
 signal StaminaEmpty
 signal stopSprinting
 
-func _onstartsprinting():
-	while await stopSprinting:
-		if Stamina != 0:
-			Stamina = Stamina - StaminaReduction
-			print(Stamina)
-		else: 
-			stopSprinting.emit()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -79,21 +73,9 @@ func _ready():
 func _process(delta):
 	if Health < Max_Health:
 		regenerateHealth()
-	if delta == 100:
-		if Hunger > 0:
-			Hunger = Hunger - 1
-		if Thirst > 0:
-			Thirst = Thirst - 1
-		if Sleep > 0 and Sleep != max_sleep:
-			Sleep = Sleep - 0.5
+
 
 func regenerateHealth():
-	while Health < Max_Health:
-		if Timer.time_left == 0:
-			Health = Health + Healthregen
-			Hunger = Hunger - 1
-			Thirst = Thirst - 0.5
-		else:
-			continue
+	pass
 		
 
