@@ -4,8 +4,8 @@ extends Control
 @onready var Healthbar: TextureProgressBar = $Healthbar
 @onready var Experiencebar: TextureProgressBar = $ExperienceBar
 @onready var StaminaBar: TextureProgressBar = $StaminaBar
-@onready var ThirstBar: TextureProgressBar = $ThirstBar
-@onready var HungerBar: TextureProgressBar = $Hungerbar
+@onready var ThirstBar: TextureProgressBar = $Thirstbar
+@onready var HungerBar: TextureProgressBar = $HungerBar
 @export var CharacterInformation: Character
 
 signal onlevelup(int)
@@ -38,6 +38,8 @@ func _process(delta):
 	Experiencebar.set_max(CharacterInformation.Experience_needed_for_next_level)
 	if StaminaBar.value == CharacterInformation.Max_Stamina:
 		StaminaBar.visible = false
+	else:  
+		StaminaBar.visible = true
 	StaminaBar.set_value(CharacterInformation.Stamina)
 	StaminaBar.set_max(CharacterInformation.Max_Stamina)
 	ThirstBar.set_value(CharacterInformation.Thirst)

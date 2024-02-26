@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ItemProtoset" load_steps=2 format=3 uid="uid://kxtslx2gxuwh"]
+
+[ext_resource type="Script" path="res://addons/gloot/core/item_protoset.gd" id="1_lt8x4"]
+
+[resource]
+script = ExtResource("1_lt8x4")
+json_data = "[
+    {
+        \"Name\": \"Stick\",
+        \"height\": 1,
+        \"id\": \"1\",
+        \"width\": 1,
+       	\"stack_size\": 16,
+        \"description\": \"The Stick is very sticky\"
+    },
+    {
+        \"image\": \"res://assets/items/Stone.png\",
+        \"Name\": \"Stone\",
+        \"height\": 1,
+        \"id\": \"2\",
+        \"width\": 1,
+        \"stack_size\": 16,
+\"description\": \"Stone are though like you\"
+    }
+]"

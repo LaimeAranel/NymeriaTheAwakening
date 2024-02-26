@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://ce2ars6p1jtj"]
+[gd_scene load_steps=8 format=3 uid="uid://ce2ars6p1jtj"]
 
 [ext_resource type="Texture2D" uid="uid://danf11ewewn3n" path="res://assets/HUD/life_under.jpg" id="1_10nvu"]
 [ext_resource type="Script" path="res://scenes/Player/PlayerHUD.gd" id="1_bn6th"]
 [ext_resource type="Texture2D" uid="uid://c11p8auyjgxdu" path="res://assets/HUD/Energy_bar.png" id="2_0gbol"]
 [ext_resource type="Texture2D" uid="uid://due5sfudf5cyt" path="res://assets/HUD/health_bar.png" id="3_apu5y"]
 [ext_resource type="Texture2D" uid="uid://d3q7a4g44gjkg" path="res://assets/HUD/experience.png" id="4_5fqe5"]
-[ext_resource type="Script" path="res://scenes/Player/EnergyBar.gd" id="4_wjiqf"]
 [ext_resource type="Texture2D" uid="uid://bcdfj5ifwncqo" path="res://assets/HUD/Hunger_progress.jpg" id="7_0jx0y"]
 [ext_resource type="Texture2D" uid="uid://cfmeb232wua2x" path="res://assets/HUD/Thirst_progress.jpg" id="8_vba4p"]
 
@@ -39,7 +38,6 @@ value = 50.0
 nine_patch_stretch = true
 texture_under = ExtResource("1_10nvu")
 texture_progress = ExtResource("2_0gbol")
-script = ExtResource("4_wjiqf")
 
 [node name="Healthbar" type="TextureProgressBar" parent="."]
 layout_mode = 1
@@ -78,7 +76,7 @@ nine_patch_stretch = true
 texture_under = ExtResource("1_10nvu")
 texture_progress = ExtResource("2_0gbol")
 
-[node name="ThirstBar" type="TextureProgressBar" parent="."]
+[node name="HungerBar" type="TextureProgressBar" parent="."]
 layout_mode = 0
 offset_left = 37.0
 offset_top = 510.0
@@ -90,7 +88,7 @@ nine_patch_stretch = true
 texture_under = ExtResource("1_10nvu")
 texture_progress = ExtResource("7_0jx0y")
 
-[node name="Hungerbar" type="TextureProgressBar" parent="."]
+[node name="Thirstbar" type="TextureProgressBar" parent="."]
 layout_mode = 0
 offset_left = 36.0
 offset_top = 525.0
