@@ -37,6 +37,10 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 var camera_fov_extents: Array[float] = [75.0, 85.0]  # index 0 is normal, index 1 is sprinting
 var base_player_y_scale: float = 1.0
 var crouch_player_y_scale: float = 0.75
+var isSprinting: bool = false
+var isnormalstate: bool = false
+var Staminafull: bool = false
+var InventoryOpen: bool = false
 
 # Node References
 @onready var parts: Dictionary = {
@@ -48,16 +52,36 @@ var crouch_player_y_scale: float = 0.75
 }
 @onready var HUD = $head/HUD
 @onready var world: SceneTree = get_tree()
+@onready var Book = $head/HUD/Book
 
 var timer: Timer
 
+
 func _ready() -> void:
 	parts["camera"].current = true
-	HUD.setCharacterinformation(Characterinformation)
+	HUD.setCharacter(Characterinformation)
+	isnormalstate = true
+	isSprinting = false
 
 func _process(delta: float) -> void:
 	handle_movement_input(delta)
 	update_camera(delta)
+	if Characterinformation.Hunger == 0:
+		Characterinformation.Health = Characterinformation.Health - 0.5
+	if Characterinformation.Thirst == 0:
+		Characterinformation.Health = Characterinformation.Health - 0.5
+	if isnormalstate == true and isSprinting == false:
+		if Characterinformation.Stamina <= Characterinformation.Max_Stamina:
+			Characterinformation.Stamina = Characterinformation.Stamina + Characterinformation.Staminaregeneration
+			Characterinformation.Hunger = Characterinformation.Hunger - Characterinformation.HungerReduction
+			if Characterinformation.Stamina == Characterinformation.Max_Stamina:
+				Staminafull = true
+	HUD.HUDUpdate.emit()
+
+	if Characterinformation.Health <= Characterinformation.Max_Health and Characterinformation.Hunger >= 0 and Characterinformation.Thirst >= 0:
+		Characterinformation.Health = (Characterinformation.Health + Characterinformation.Healthregen)
+		Characterinformation.Hunger = Characterinformation.Hunger - Characterinformation.HungerReduction
+		Characterinformation.Thirst = Characterinformation.Thirst - Characterinformation.ThirstReduction
 
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
@@ -67,10 +91,20 @@ func _physics_process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		handle_mouse_movement(event)
+	if event.is_action_pressed("Inventory") and InventoryOpen == true:
+		Book.visible  = false
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		InventoryOpen = false
+	elif event.is_action_pressed("Inventory"):
+		Book.visible  = true
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		InventoryOpen = true
+	
+	
 
 # Movement Logic
 func handle_movement_input(delta: float) -> void:
-	if Input.is_action_pressed("move_sprint") and !Input.is_action_pressed("move_crouch") and sprint_enabled:
+	if Input.is_action_pressed("move_sprint") and !Input.is_action_pressed("move_crouch") and sprint_enabled and Characterinformation.Stamina >= 0:
 		if !$crouch_roof_detect.is_colliding(): #if the player is crouching and underneath a ceiling that is too low, don't let the player stand up
 			enter_sprint_state(delta)
 	elif Input.is_action_pressed("move_crouch") and !Input.is_action_pressed("move_sprint") and crouch_enabled:
@@ -78,13 +112,25 @@ func handle_movement_input(delta: float) -> void:
 	else:
 		if !$crouch_roof_detect.is_colliding(): #if the player is crouching and underneath a ceiling that is too low, don't let the player stand up
 			enter_normal_state(delta)
+			
+	if Input.is_action_pressed("Interact"):
+		print("interact")
+		handle_interaction()
+		
+
 
 func enter_sprint_state(delta: float) -> void:
-		state = "sprinting"
-		speed = sprint_speed
-		parts["camera"].fov = lerp(parts["camera"].fov, camera_fov_extents[1], 10 * delta)
+	state = "sprinting"
+	speed = sprint_speed + Characterinformation.additional_movement_speed
+	parts["camera"].fov = lerp(parts["camera"].fov, camera_fov_extents[1], 10 * delta)
+	if Characterinformation.Stamina <= 0:
 		enter_normal_state(delta)
-		print("back to normal")
+	else:
+		Characterinformation.Stamina = Characterinformation.Stamina - Characterinformation.StaminaReduction
+		Characterinformation.Thirst -= Characterinformation.ThirstReduction
+		print(Characterinformation.Stamina)
+		isSprinting = true
+		HUD.HUDUpdate.emit()
 
 
 func enter_crouch_state(delta: float) -> void:
@@ -95,7 +141,9 @@ func enter_crouch_state(delta: float) -> void:
 func enter_normal_state(delta: float) -> void:
 	state = "normal"
 	speed = base_speed
+	isnormalstate = true
 	reset_transforms(delta)
+	isSprinting = false
 
 # Camera Logic
 func update_camera(delta: float) -> void:
@@ -137,6 +185,9 @@ func handle_mouse_movement(event: InputEventMouseMotion) -> void:
 		parts["head"].rotation_degrees.y -= event.relative.x * sensitivity
 		parts["head"].rotation_degrees.x -= event.relative.y * sensitivity
 		parts["head"].rotation.x = clamp(parts["head"].rotation.x, deg_to_rad(-90), deg_to_rad(90))
+
+func handle_interaction() -> void:
+	pass
 
 func _damagedealt(Damage: int):
 	Characterinformation.DealDamagetoPlayer.emit(Damage)

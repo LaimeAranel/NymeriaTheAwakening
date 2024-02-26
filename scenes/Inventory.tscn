@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=3 uid="uid://b8l0l8jr6lmwv"]
+
+[ext_resource type="Script" path="res://addons/gloot/ui/ctrl_inventory_grid_ex.gd" id="1_55sd6"]
+[ext_resource type="Texture2D" uid="uid://b2hkcwwq10cut" path="res://icon.png" id="2_x12x8"]
+[ext_resource type="Script" path="res://addons/gloot/core/inventory_grid.gd" id="3_shuo4"]
+[ext_resource type="Resource" uid="uid://kxtslx2gxuwh" path="res://data/player/Invent/ItemProtoset.tres" id="4_12ipx"]
+[ext_resource type="Script" path="res://addons/gloot/core/inventory_item.gd" id="5_m2x8e"]
+
+[node name="Book" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1152.0
+offset_bottom = -648.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="main" type="PanelContainer" parent="."]
+layout_mode = 1
+offset_left = 49.0
+offset_top = 38.0
+offset_right = 1063.0
+offset_bottom = 613.0
+
+[node name="Book" type="Panel" parent="main"]
+layout_mode = 2
+
+[node name="CtrlInventoryGridEx" type="Control" parent="main/Book"]
+custom_minimum_size = Vector2(509, 509)
+layout_mode = 3
+anchors_preset = 0
+offset_left = 26.0
+offset_top = 31.0
+offset_right = 535.0
+offset_bottom = 540.0
+script = ExtResource("1_55sd6")
+field_dimensions = Vector2(50, 50)
+item_spacing = 1
+inventory_path = NodePath("InventoryGrid2")
+default_item_texture = ExtResource("2_x12x8")
+
+[node name="InventoryGrid2" type="Node" parent="main/Book/CtrlInventoryGridEx"]
+script = ExtResource("3_shuo4")
+item_protoset = ExtResource("4_12ipx")
+
+[node name="_Node_44133" type="Node" parent="main/Book/CtrlInventoryGridEx/InventoryGrid2"]
+script = ExtResource("5_m2x8e")
+protoset = ExtResource("4_12ipx")
+prototype_id = "2"
+
+[node name="_Node_44148" type="Node" parent="main/Book/CtrlInventoryGridEx/InventoryGrid2"]
+script = ExtResource("5_m2x8e")
+protoset = ExtResource("4_12ipx")
+prototype_id = "1"
+properties = {
+"grid_position": Vector2i(6, 1),
+"image": "res://assets/items/Stick.png",
+"rotated": true
+}
